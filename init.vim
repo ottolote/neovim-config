@@ -8,9 +8,10 @@
 " vim-plug
 call plug#begin('~/.vim/plugged')
 
-" Deoplete{{{
+" Deoplete-clang{{{
 "
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'zchee/deoplete-clang'
 
 "}}}
 " Solarized colorscheme {{{
@@ -53,8 +54,15 @@ call plug#end()
 "}}}
 " Plug config {{{
 "
-" Deoplete{{{
+" Deoplete-clang {{{
+"
+" Deoplete general
 let g:deoplete#enable_at_startup = 1
+
+" Deoplete-clang specific, see
+" https://github.com/zchee/deoplete-clang#available-settings for more info
+let g:deoplete#sources#clang#libclang_path = '/usr/lib/libclang.so'
+let g:deoplete#sources#clang#clang_header = '/usr/lib/clang/3.9.1/include/'
 " }}}
 "
 " }}}
