@@ -3,6 +3,9 @@
 " Description: Personal nvim configuration file (WIP), feel free to use as you wish
 " License: kopimi
 " Plugins {{{
+"
+" Installed plugins {{{
+" vim-plug
 call plug#begin('~/.vim/plugged')
 
 " Deoplete{{{
@@ -48,6 +51,15 @@ Plug 'altercation/vim-colors-solarized'
 " Add plugins to &runtimepath
 call plug#end()
 "}}}
+" Plug config {{{
+"
+" Deoplete{{{
+let g:deoplete#enable_at_startup = 1
+" }}}
+"
+" }}}
+"
+"}}}
 " Security {{{
 "
 " TODO:
@@ -60,7 +72,7 @@ set nobackup
 "}}}
 " Usability {{{
 "
-" Search options {{{
+" Search {{{
 " 
 " Highlight searches (use <C-L> to temporarily turn off highlighting; see the
 " mapping of <C-L> below)
@@ -69,6 +81,11 @@ set hlsearch
 " Use case insensitive search, except when using capital letters
 set ignorecase
 set smartcase
+" }}}
+" Folding {{{
+"
+" Fold on markers by default
+set foldmethod=marker
 " }}}
 "
 " }}}
@@ -101,10 +118,8 @@ set autoindent
 " coming from other editors would expect.
 set nostartofline
 
-
-
-"------------------------------------------------------------}}}
-" Mappings {{{1
+"}}}
+" Mappings {{{
 "
 " Useful mappings
 
