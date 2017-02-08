@@ -121,7 +121,7 @@ set nostartofline
 "}}}
 " Mappings {{{
 "
-" Useful mappings
+" General useful mappings {{{
 
 " Map Y to act like D and C, i.e. to yank until EOL, rather than act as yy,
 " which is the default
@@ -130,7 +130,8 @@ map Y y$
 " Map <C-L> (redraw screen) to also turn off search highlighting until the
 " next search
 nnoremap <C-L> :nohl<CR><C-L>
-
+"}}}
+" Custom mappings {{{
 " Compile all latex files in the folder
 nnoremap <F3> :!latex *.tex<Enter><Enter>
 
@@ -143,6 +144,11 @@ nnoremap <F5> :edit<Enter>
 
 " Location list for completions etc.
 nnoremap <F10> :ll<Enter>
+"}}}
+" Plugin mappings {{{
+" deoplete tab-complete
+inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+" }}}
 
 "}}}
 " Colors {{{
