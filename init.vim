@@ -111,6 +111,19 @@ set foldmethod=marker
 " }}}
 "
 " }}}
+" Visual {{{
+"
+" Relative numbers are displayed instead of line numbers
+set relativenumber
+
+" When relativenumber is on this makes the selected line show the line number
+" instead of a 0
+set number
+
+" Show line number and position of marker in bottom right corner
+set ruler
+
+" }}}
 " Indentation options {{{
 "
 " Attempt to determine the type of a file based on its name and possibly its
