@@ -18,6 +18,11 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " You need the option "colorscheme solarized" to apply this plugin
 Plug 'altercation/vim-colors-solarized'
 "}}}
+" Neoterm {{{
+
+Plug 'kassio/neoterm'
+
+" }}}
 " vim-plug usage examples {{{
 " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
 " Plug 'junegunn/vim-easy-align'
@@ -55,6 +60,15 @@ call plug#end()
 "
 " Deoplete{{{
 let g:deoplete#enable_at_startup = 1
+" }}}
+" Neoterm {{{
+
+" ,tt to run command bound with :Tmap
+let g:neoterm_automap_keys = ',tt'
+
+" set size of the created terminal split
+let g:neoterm_size = "15"
+
 " }}}
 "
 " }}}
@@ -146,8 +160,25 @@ nnoremap <F5> :edit<Enter>
 nnoremap <F10> :ll<Enter>
 "}}}
 " Plugin mappings {{{
+"
+" Deoplete {{{
 " deoplete tab-complete
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+"}}}
+" Neoterm {{{
+
+" hide/close terminal
+nnoremap <silent> ,th :call neoterm#close()<cr>
+" clear terminal
+nnoremap <silent> ,tl :call neoterm#clear()<cr>
+" kills the current job (send a <c-c>)
+nnoremap <silent> ,tc :call neoterm#kill()<cr>
+
+" toggle the neoterm terminal
+nnoremap <silent> ,to :Ttoggle<cr>
+
+" }}}
+"
 " }}}
 
 "}}}
