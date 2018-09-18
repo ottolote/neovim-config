@@ -1,208 +1,208 @@
-" URL: github url coming after inital commit
-" Authors: Otto Lote (loosely based on http://vim.wikia.com/wiki/Example_vimrc)
-" Description: Personal nvim configuration file (WIP), feel free to use as you wish
-" License: kopimi
-" Plugins {{{
-"
-" Installed plugins {{{
-" vim-plug
-call plug#begin('~/.vim/plugged')
+" URL: https://github.com/ottolote/neovim-config
+" Authors: Otto Lote
+" Description: Personal nvim configuration file (work in progress)
+" License: GPLv3
+" Note: Loosely based on http://vim.wikia.com/wiki/Example_vimrc
 
-" Deoplete{{{
-"
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" This file is organized with folds using foldmethod=marker in vim.
+" Reading this file is a lot more pleasant with folding.
 
-"}}}
-" Solarized colorscheme {{{
-"
-" You need the option "colorscheme solarized" to apply this plugin
-Plug 'altercation/vim-colors-solarized'
-"}}}
-" Neoterm {{{
-
-Plug 'kassio/neoterm'
-
-" }}}
-" vim-plug usage examples {{{
-" Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
-" Plug 'junegunn/vim-easy-align'
-
-" Any valid git URL is allowed
-" Plug 'https://github.com/junegunn/vim-github-dashboard.git'
-
-" Group dependencies, vim-snippets depends on ultisnips
-" Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
-
-" On-demand loading
-" Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-" Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
-
-" Using a non-master branch
-" Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
-
-" Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
-" Plug 'fatih/vim-go', { 'tag': '*' }
-
-" Plugin options
-" Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
-
-" Plugin outside ~/.vim/plugged with post-update hook
-" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-
-" Unmanaged plugin (manually installed and updated)
-" Plug '~/my-prototype-plugin'
-" }}}
-
-" Add plugins to &runtimepath
-call plug#end()
-"}}}
-" Plug config {{{
-"
-" Deoplete{{{
-let g:deoplete#enable_at_startup = 1
-" }}}
-" Neoterm {{{
-
-" ,tt to run command bound with :Tmap
-let g:neoterm_automap_keys = ',tt'
-
-" set size of the created terminal split
-let g:neoterm_size = "15"
-
-" }}}
-"
-" }}}
-"
-"}}}
-" Security {{{
-"
 " TODO:
-"  - disable swap-files for certain files (like when used with GNU pass)
+" - Personal note: Move all colors to this file instead of .Xresources 
 
-" Make sure no sensitive info is stored in backups when editing sensitive
-" files
-set nobackup
+" Plugins {{{
 
-"}}}
-" Usability {{{
-"
+"   __vim-plug header {{{
+
+      call plug#begin('~/.vim/plugged')
+
+"   }}}
+"   Deoplete {{{
+
+"     Load {{{
+
+        if has('nvim')
+          Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+        else
+          Plug 'Shougo/deoplete.nvim'
+          Plug 'roxma/nvim-yarp'
+          Plug 'roxma/vim-hug-neovim-rpc'
+        endif
+
+        Plug 'zchee/deoplete-jedi'
+
+"     }}}
+"     Config {{{
+
+        let g:deoplete#enable_at_startup = 1
+
+"     }}}
+"     Mappings {{{
+
+        " deoplete tab-complete
+        inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+
+"     }}}
+
+"   }}}
+"   Neoterm {{{
+
+      Plug 'kassio/neoterm'
+
+"     Config {{{
+
+        " ,tt to run command bound with :Tmap
+        let g:neoterm_automap_keys = ',tt'
+
+        " set size of the created terminal split
+        let g:neoterm_size = "15"
+
+"     }}}
+"     Mappings {{{
+
+        " hide/close terminal
+        nnoremap <silent> ,th :call neoterm#close()<cr>
+        " clear terminal
+        nnoremap <silent> ,tl :call neoterm#clear()<cr>
+        " kills the current job (send a <c-c>)
+        nnoremap <silent> ,tc :call neoterm#kill()<cr>
+        
+        " toggle the neoterm terminal
+        nnoremap <silent> ,to :Ttoggle<cr>
+
+"     }}}
+
+"   }}}
+"   NERDTree {{{
+
+      Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle' }
+
+      " Config
+      " Map ctrl+n to toggle nerdtree
+      map <C-n> :NERDTreeToggle<CR>
+
+"   }}}
+"   Solarized colorscheme {{{
+
+      Plug 'altercation/vim-colors-solarized'
+
+      " Use the option "colorscheme solarized" to apply this plugin
+      
+"   }}}
+"   Spiffy Fold {{{
+
+      Plug 'atimholt/spiffy_foldtext'
+
+      " Config
+      if has('multi_byte')
+          let g:SpiffyFoldtext_format = "%c{═}  %<%f{═}╡ %4n lines ╞═%l{╤═}"
+      else
+          let g:SpiffyFoldtext_format = "%c{=}  %<%f{═}| %4n lines |=%l{/=}"
+      endif
+
+"   }}}
+"   __vim-plug-footer{{{
+
+      call plug#end()
+
+"   }}}
+
+" }}}
 " Search {{{
-" 
-" Highlight searches (use <C-L> to temporarily turn off highlighting; see the
-" mapping of <C-L> below)
-set hlsearch
+   
+    " Highlight searches (use <C-L> to temporarily turn off highlighting; see the
+    " mapping of <C-L> below)
+    set hlsearch
 
-" Use case insensitive search, except when using capital letters
-set ignorecase
-set smartcase
+    " Use case insensitive search, except when using capital letters
+    set ignorecase
+    set smartcase
+
+" }}}
+" Coloring {{{
+
+    " Syntax highlighting/coloring
+    syntax enable
+
+    " Dark works nicely with solarized theme
+    set background=dark
+
+    " Use 'altercation/vim-colors-solarized' (plugin)
+    colorscheme solarized
+
+    " Fold color and formatting
+    highlight Folded term=bold cterm=NONE ctermfg=Gray
+
 " }}}
 " Folding {{{
-"
-" Fold on markers by default
-set foldmethod=marker
-" }}}
-"
-" }}}
-" Visual {{{
-"
-" Relative numbers are displayed instead of line numbers
-set relativenumber
 
-" When relativenumber is on this makes the selected line show the line number
-" instead of a 0
-set number
+    " Fold on markers by default
+    set foldmethod=syntax
 
-" Show line number and position of marker in bottom right corner
-set ruler
+    " Start unfolded
+    set foldlevelstart=20
+
+    " Fold init.vim nicely using foldmarkers
+    autocmd BufRead init.vim setlocal foldmethod=marker
+    autocmd BufRead init.vim setlocal foldlevel=0
 
 " }}}
-" Indentation options {{{
-"
-" Attempt to determine the type of a file based on its name and possibly its
-" contents. Use this to allow intelligent auto-indenting for each filetype,
-" and for plugins that are filetype specific.
-filetype indent plugin on
+" Display {{{
 
-" Indentation settings for using 4 spaces instead of tabs.
-set shiftwidth=4
-set softtabstop=4
-set expandtab
+    " Relative numbers are displayed instead of line numbers
+    set relativenumber
 
-" Indentation settings for using hard tabs for indent. Display tabs as
-" two characters wide.
-" set shiftwidth=2
-" set tabstop=2
-"
-" Allow backspacing over autoindent, line breaks and start of insert action
-set backspace=indent,eol,start
+    " Show line numbers 
+    " When relative numbers are set, show line number for current line
+    set number
 
-" When opening a new line and no filetype-specific indenting is enabled, keep
-" the same indent as the line you're currently on. Useful for READMEs, etc.
-set autoindent
-
-" Stop certain movements from always going to the first character of a line.
-" While this behaviour deviates from that of Vi, it does what most users
-" coming from other editors would expect.
-set nostartofline
-
-"}}}
-" Mappings {{{
-"
-" General useful mappings {{{
-
-" Map Y to act like D and C, i.e. to yank until EOL, rather than act as yy,
-" which is the default
-map Y y$
-
-" Map <C-L> (redraw screen) to also turn off search highlighting until the
-" next search
-nnoremap <C-L> :nohl<CR><C-L>
-"}}}
-" Custom mappings {{{
-" Compile all latex files in the folder
-nnoremap <F3> :!latex *.tex<Enter><Enter>
-
-" Git convenience mappings (a bit shit)
-nnoremap <F4> :!git commit -am "$(date) "; git pull<Enter>
-nnoremap <F2> :!git push<Enter><Enter>
-
-" Reload file from disk
-nnoremap <F5> :edit<Enter>
-
-" Location list for completions etc.
-nnoremap <F10> :ll<Enter>
-"}}}
-" Plugin mappings {{{
-"
-" Deoplete {{{
-" deoplete tab-complete
-inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
-"}}}
-" Neoterm {{{
-
-" hide/close terminal
-nnoremap <silent> ,th :call neoterm#close()<cr>
-" clear terminal
-nnoremap <silent> ,tl :call neoterm#clear()<cr>
-" kills the current job (send a <c-c>)
-nnoremap <silent> ,tc :call neoterm#kill()<cr>
-
-" toggle the neoterm terminal
-nnoremap <silent> ,to :Ttoggle<cr>
+    " Show line number and position of marker in bottom right corner
+    set ruler
 
 " }}}
-"
+" Indentation {{{
+
+    " Attempt to determine the type of a file based on its name and possibly its
+    " contents. Use this to allow intelligent auto-indenting for each filetype,
+    " and for plugins that are filetype specific.
+    filetype indent plugin on
+
+    " Use 2 spaces instead of tab
+    set shiftwidth=2
+    set softtabstop=2
+    set expandtab
+
+    "" Use hard tabs but display them as 2 characters wide
+    " set shiftwidth=2
+    " set tabstop=2
+
+    " Allow backspacing over autoindent, line breaks and start of insert action
+    set backspace=indent,eol,start
+
+    " When opening a new line and no filetype-specific indenting is enabled, keep
+    " the same indent as the line you're currently on. Useful for READMEs, etc.
+    set autoindent
+
+    " Stop certain movements from always going to the first character of a line.
+    " While this behaviour deviates from that of Vi, it does what most users
+    " coming from other editors would expect.
+    set nostartofline
+
 " }}}
+" Key Mapping {{{
+    
+    " Map Y to act like D and C, i.e. to yank until EOL, rather than act as yy,
+    " which is the default
+    map Y y$
 
-"}}}
-" Colors {{{
+    " Map <C-L> (redraw screen) to also turn off search highlighting until the
+    " next search
+    nnoremap <C-L> :nohl<CR><C-L>
 
-syntax enable
+" }}}
+" Security {{{
 
-" dark works nicely with solarized theme
-set background=dark
+  " TODO:
+  "  - disable swap-files and backup for certain files (such as when editing files with GNU pass)
 
-" Must have 'altercation/vim-colors-solarized' as plugin
-colorscheme solarized
-
-"}}}
+" }}}
