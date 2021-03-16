@@ -1,4 +1,4 @@
-" URL: https://github.com/ottolote/neovim-config
+
 " Authors: Otto Lote
 " Description: Personal nvim configuration file (work in progress)
 " License: GPLv3
@@ -11,12 +11,8 @@
 " - Personal note: Move all colors to this file instead of .Xresources 
 
 " Plugins {{{
-
-"   __vim-plug header {{{
-
       call plug#begin('~/.vim/plugged')
 
-"   }}}
 "   Deoplete {{{
 
 "     Load {{{
@@ -45,6 +41,28 @@
 "     }}}
 
 "   }}}
+"   Neomake {{{
+
+"     Load {{{
+
+        Plug 'neomake/neomake'
+
+"     }}}
+
+"   }}}
+"   Neoformat {{{
+
+"     Load {{{
+
+        Plug 'sbdchd/neoformat'
+
+"     }}}
+"     Config {{{
+
+
+"     }}}
+
+"   }}}
 "   Neoterm {{{
 
       Plug 'kassio/neoterm'
@@ -60,15 +78,15 @@
 "     }}}
 "     Mappings {{{
 
-        " hide/close terminal
-        nnoremap <silent> ,th :call neoterm#close()<cr>
-        " clear terminal
-        nnoremap <silent> ,tl :call neoterm#clear()<cr>
-        " kills the current job (send a <c-c>)
-        nnoremap <silent> ,tc :call neoterm#kill()<cr>
-        
-        " toggle the neoterm terminal
-        nnoremap <silent> ,to :Ttoggle<cr>
+        "" hide/close terminal
+        "nnoremap <silent> ,th :call neoterm#close()<cr>
+        "" clear terminal
+        "nnoremap <silent> ,tl :call neoterm#clear()<cr>
+        "" kills the current job (send a <c-c>)
+        "nnoremap <silent> ,tc :call neoterm#kill()<cr>
+        "
+        "" toggle the neoterm terminal
+        "nnoremap <silent> ,to :Ttoggle<cr>
 
 "     }}}
 
@@ -101,10 +119,24 @@
       endif
 
 "   }}}
-"   __vim-plug-footer{{{
-
+"
       call plug#end()
+"   Postconfig {{{
+"     Neomake {{{
+"       Config {{{
 
+          " When writing a buffer (no delay).
+          call neomake#configure#automake('w')
+          " When writing a buffer (no delay), and on normal mode changes (after 750ms).
+          call neomake#configure#automake('nw', 750)
+          " When reading a buffer (after 1s), and when writing (no delay).
+          call neomake#configure#automake('rw', 1000)
+          " Full config: when writing or reading a buffer, and on changes in insert and
+          " normal mode (after 1s; no delay when writing).
+          call neomake#configure#automake('nrwi', 500)
+
+"       }}}
+"     }}}
 "   }}}
 
 " }}}
