@@ -20,6 +20,19 @@ export OPENAI_API_KEY='your-api-key-here'
 
 Add this line to your `.bashrc`, `.zshrc`, or equivalent shell configuration file to make it persistent.
 
+## Language Server Protocol (LSP) Configuration
+
+To use the LSP functionality, each language server must be installed separately. For example, to configure the Bicep language server:
+
+1. Install the .NET SDK from the official Microsoft .NET download page.
+2. Install the Bicep language server by running the following commands:
+
+    ```bash
+    sudo (cd $(mktemp -d) && curl -fLO https://github.com/Azure/bicep/releases/latest/download/bicep-langserver.zip && rm -rf /usr/local/bin/bicep-langserver && unzip -d /usr/local/bin/bicep-langserver bicep-langserver.zip)
+    ```
+
+3. The `config.lua` script in the `lua/` directory  installation path for the Bicep language server binary. If you manually install `Bicep.LangServer.dll` at a different location, update the `bicep_lsp_bin` variable in `config.lua` to match the new path.
+
 ## Usage
 
 Link config files:
