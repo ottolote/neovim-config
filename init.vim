@@ -1,6 +1,6 @@
 " URL: https://github.com/ottolote/neovim-config
 " Authors: Otto Lote
-" Description: Personal nvim configuration file (work in progress)
+" Description: Personal nvim configuration files
 " License: GPLv3
 " Note: Loosely based on http://vim.wikia.com/wiki/Example_vimrc
 
