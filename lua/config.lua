@@ -187,6 +187,9 @@
   vim.keymap.set("v", "<C-g>wt", ":<C-u>'<,'>GpWhisperTabnew<cr>", keymapOptions("Visual Whisper Tabnew"))
   -- }}}
 -- }}}
+-- {{{ Git
+require('gitsigns').setup()
+-- }}}
 -- {{{ Global mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)

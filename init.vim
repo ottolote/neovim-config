@@ -41,6 +41,12 @@
 "     }}}
 
 "   }}}
+"   Git {{{
+
+      Plug 'tpope/vim-fugitive'
+      Plug 'lewis6991/gitsigns.nvim'
+
+"   }}}
 "   Language Server {{{
 
       Plug 'neovim/nvim-lspconfig'
@@ -91,6 +97,11 @@
 "   GPT {{{
 
       Plug 'robitx/gp.nvim'
+
+"   }}}
+"   Markdown {{{
+
+      Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
 
 "   }}}
 "   Spiffy Fold {{{
