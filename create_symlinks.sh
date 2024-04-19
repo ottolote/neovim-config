@@ -3,7 +3,7 @@
 REPO_NVIM_CONFIG=$(dirname "$(readlink --canonicalize "$0")")
 LOCAL_NVIM_CONFIG=$(nvim --headless --cmd 'echo stdpath("config")' --cmd 'quit' 2>&1)
 
-NVIM_FILES="lua init.vim"
+NVIM_FILES="lua init.lua"
 
 # Create config dir if it doesn't exist
 mkdir --parents $LOCAL_NVIM_CONFIG
