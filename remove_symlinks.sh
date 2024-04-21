@@ -2,7 +2,7 @@
 
 LOCAL_NVIM_CONFIG=$(nvim --headless --cmd 'echo stdpath("config")' --cmd 'quit' 2>&1)
 
-NVIM_FILES="lua init.vim"
+NVIM_FILES="lua init.vim init.lua"
 
 # Check if any file is not a symlink and exit early if true
 for file in $NVIM_FILES; do
