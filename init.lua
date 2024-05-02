@@ -188,14 +188,76 @@ vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" }
 -- vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
 -- vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
 
--- Keybinds to make split navigation easier.
---  Use CTRL+<hjkl> to switch between windows
---
---  See `:help wincmd` for a list of all window commands
-vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left window" })
-vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right window" })
-vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
-vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
+-- -- Keybinds to make split navigation easier.
+-- --  Use CTRL+<hjkl> to switch between windows
+-- --
+-- --  See `:help wincmd` for a list of all window commands
+-- vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left window" })
+-- vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right window" })
+-- vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
+-- vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
+
+vim.keymap.set("n", "<C-j>", ":cnext<CR>", { desc = "Jump to the next quickfix entry" })
+vim.keymap.set("n", "<C-k>", ":cprevious<CR>", { desc = "Jump to the previous quickfix entry" })
+
+-- Function to remove the currently selected entry from the quickfix list in Neovim
+local function remove_selected_quickfix()
+	local qf_list = vim.fn.getqflist()
+	local qf_idx = vim.fn.getqflist({ idx = 0 }).idx
+	if qf_idx <= 0 or qf_idx > #qf_list then
+		print("Invalid quickfix list index")
+		return
+	end
+
+	table.remove(qf_list, qf_idx)
+
+	if #qf_list == 0 then
+		vim.cmd("cclose")
+	else
+		-- Set the new quickfix list without the removed entry
+		vim.fn.setqflist({}, "r", { items = qf_list })
+		-- If we are not at the end of the list, move the selection to the next item
+		if qf_idx <= #qf_list then
+			vim.fn.setqflist({}, "r", { idx = qf_idx })
+		else
+			-- If we are at the end, move the selection to the new last item
+			vim.fn.setqflist({}, "r", { idx = #qf_list })
+		end
+	end
+end
+
+vim.keymap.set("n", "<C-l>", remove_selected_quickfix, { desc = "Remove active entry from the quickfix list" })
+
+-- Function to add the current cursor line to the quickfix list in Neovim
+local function add_to_quickfix()
+	local bufnr = vim.api.nvim_get_current_buf()
+	local line = vim.api.nvim_win_get_cursor(0)[1]
+	local col = vim.api.nvim_win_get_cursor(0)[2]
+	local qf_list = vim.fn.getqflist()
+
+	-- Get the full line text
+	local line_text = vim.api.nvim_buf_get_lines(bufnr, line - 1, line, false)[1]
+
+	-- Create the new entry for the quickfix list
+	local new_entry = {
+		bufnr = bufnr,
+		lnum = line,
+		col = col + 1, -- Lua index is 1-based, Vim is 0-based
+		text = line_text,
+	}
+
+	-- Add the new entry to the quickfix list
+	table.insert(qf_list, new_entry)
+
+	-- Update the quickfix list with the new entry
+	vim.fn.setqflist({}, "r", { items = qf_list })
+end
+
+vim.keymap.set("n", "<C-h>", add_to_quickfix, { desc = "Add current line to the quickfix list" })
+
+-- location list
+vim.keymap.set("n", "<C-n>", ":lnext<CR>", { desc = "Jump to the next location list entry" })
+vim.keymap.set("n", "<C-p>", ":lprevious<CR>", { desc = "Jump to the previous location list entry" })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
