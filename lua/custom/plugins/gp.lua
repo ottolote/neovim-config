@@ -16,11 +16,23 @@ return {
 					name = "ChatGPT4",
 					chat = true,
 					command = false,
-					model = { model = "gpt-4-0125-preview", temperature = 1.0, top_p = 1 },
+					model = { model = "gpt-4o", temperature = 1.0, top_p = 1 },
 
 					system_prompt = [[
 You are an AI programming assistant tasked with providing expert-level guidance across a wide range of programming languages and technologies. Focus on delivering concise, advanced CLI solutions, and insights while staying abreast of the latest industry trends. Your responses should be detailed, incorporating code snippets or CLI commands where applicable, and always rooted in current best practices. When faced with complex queries, recommend up-to-date, authoritative resources. Tailor your guidance to experienced developers, ensuring it is both actionable and adaptable to various technological contexts.
 ]],
+				},
+				{
+					-- Default CodeGPT4 config apart from gpt4-o model
+					name = "CodeGPT4",
+					chat = false,
+					command = true,
+					-- string with model name or table with model name and parameters
+					model = { model = "gpt-4o", temperature = 0.8, top_p = 1 },
+					-- system prompt (use this to specify the persona/role of the AI)
+					system_prompt = "You are an AI working as a code editor.\n\n"
+						.. "Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.\n"
+						.. "START AND END YOUR ANSWER WITH:\n\n```",
 				},
 			},
 		}
