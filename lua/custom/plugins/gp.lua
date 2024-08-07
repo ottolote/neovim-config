@@ -5,15 +5,24 @@ return {
 		local gptconf = {
 			-- openai_api_endpoint = "http://localhost:1234/v1/chat/completions",
 			openai_api_key = os.getenv("OPENAI_API_KEY"),
+			providers = {
+				openai = {
+					endpoint = "https://api.openai.com/v1/chat/completions",
+					secret = os.getenv("OPENAI_API_KEY"),
+				},
+				localmachine = {
+					endpoint = "http://localhost:1234/v1/chat/completions",
+					secret = "none",
+				},
+			},
+
+			default_command_agent = "CodeGPT4o",
+			default_chat_agent = "CustomGPT4o",
+
 			agents = {
 				{
-					name = "ChatGPT3-5", -- Only name disables ChatGPT3.5
-				},
-				{
-					name = "CodeGPT3-5", -- Only name disables ChatGPT3.5
-				},
-				{
-					name = "ChatGPT4",
+					name = "CustomGPT4o",
+					provider = "openai",
 					chat = true,
 					command = false,
 					model = { model = "gpt-4o", temperature = 1.0, top_p = 1 },
@@ -23,13 +32,16 @@ You are an AI programming assistant tasked with providing expert-level guidance 
 ]],
 				},
 				{
-					-- Default CodeGPT4 config apart from gpt4-o model
-					name = "CodeGPT4",
-					chat = false,
+					name = "llamalocal",
+					provider = "localmachine",
+					chat = true,
 					command = true,
-					-- string with model name or table with model name and parameters
-					model = { model = "gpt-4o", temperature = 0.8, top_p = 1 },
-					-- system prompt (use this to specify the persona/role of the AI)
+					model = {
+						model = "lmstudio-community/Meta-Llama-3-8B-Instruct-GGUF",
+						temperature = 1.0,
+						top_p = 1,
+					},
+
 					system_prompt = "You are an AI working as a code editor.\n\n"
 						.. "Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.\n"
 						.. "START AND END YOUR ANSWER WITH:\n\n```",
