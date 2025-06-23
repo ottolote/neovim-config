@@ -41,6 +41,23 @@ return {
 				}),
 			},
 		})
+		-- require("which-key").register(
+		-- 	{ "<leader>t", group = "neotest" },
+		-- 	{ "<leader>ta", "<cmd>lua require('neotest').run.attach()<CR>", desc = "Neo[T]est [A]ttach" },
+		-- 	{
+		-- 		"<leader>tf",
+		-- 		"<cmd>lua require('neotest').run.run(vim.fn.expand('%'))<CR>",
+		-- 		desc = "Neo[T]est run [F]ile tests",
+		-- 	},
+		-- 	{
+		-- 		"<leader>tn",
+		-- 		"<cmd>lua require('neotest').run.run({strategy = 'nearest'})<CR>",
+		-- 		desc = "Neo[T]est run [N]earest test",
+		-- 	},
+		-- 	{ "<leader>to", "<cmd>lua require('neotest').output.open()<CR>", desc = "Neo[T]est [O]utput" },
+		-- 	{ "<leader>tr", "<cmd>lua require('neotest').run.run()<CR>", desc = "Neo[T]est [R]un" },
+		-- 	{ "<leader>ts", "<cmd>lua require('neotest').summary.toggle()<CR>", desc = "Neo[T]est [S]ummary" },
+		-- )
 		require("which-key").register({
 			t = {
 				name = "neotest", -- Title for the group of mappings
