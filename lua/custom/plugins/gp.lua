@@ -20,19 +20,46 @@ return {
 			default_chat_agent = "CustomGPT4o",
 
 			agents = {
+				{
+					name = "o4-mini-chat",
+					provider = "openai",
+					chat = true,
+					command = false,
+					model = { model = "o4-mini", temperature = 1.0, top_p = 1 },
+					-- TODO move instructions from bragbot-context to system prompt
+					system_prompt = [[
+You are an AI programming assistant tasked with providing expert-level guidance across a wide range of programming languages and technologies. Focus on delivering concise, advanced CLI solutions, and insights while staying abreast of the latest industry trends. Your responses should be detailed, incorporating code snippets or CLI commands where applicable, and always rooted in current best practices. When faced with complex queries, recommend up-to-date, authoritative resources. Tailor your guidance to experienced developers, ensuring it is both actionable and adaptable to various technological contexts.
+]],
+				},
+				{
+					name = "o4-mini-code",
+					provider = "openai",
+					chat = false,
+					command = true,
+					model = { model = "o4-mini", temperature = 1.0, top_p = 1 },
+					system_prompt = [[
+You are an AI working as a text editor
+
+The user provided additional info about how you should respond
+Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.
+START AND END YOUR ANSWER WITH:
+
+```
+]],
+				},
 				-- 				{
-				-- 					name = "o1-preview-chat",
+				-- 					name = "o1-mini-chat",
 				-- 					provider = "openai",
 				-- 					chat = true,
 				-- 					command = false,
-				-- 					model = { model = "o1-preview", temperature = 1.0, top_p = 1 },
-				--
+				-- 					model = { model = "o1-mini", temperature = 1.0, top_p = 1 },
+				-- 					-- TODO move instructions from bragbot-context to system prompt
 				-- 					system_prompt = [[
 				-- You are an AI programming assistant tasked with providing expert-level guidance across a wide range of programming languages and technologies. Focus on delivering concise, advanced CLI solutions, and insights while staying abreast of the latest industry trends. Your responses should be detailed, incorporating code snippets or CLI commands where applicable, and always rooted in current best practices. When faced with complex queries, recommend up-to-date, authoritative resources. Tailor your guidance to experienced developers, ensuring it is both actionable and adaptable to various technological contexts.
 				-- ]],
 				-- 				},
 				-- 				{
-				-- 					name = "o1-preview-code",
+				-- 					name = "o1-mini-code",
 				-- 					provider = "openai",
 				-- 					chat = false,
 				-- 					command = true,
@@ -47,33 +74,6 @@ return {
 				-- ```
 				-- ]],
 				-- 				},
-				{
-					name = "o1-mini-chat",
-					provider = "openai",
-					chat = true,
-					command = false,
-					model = { model = "o1-mini", temperature = 1.0, top_p = 1 },
-					-- TODO move instructions from bragbot-context to system prompt
-					system_prompt = [[
-You are an AI programming assistant tasked with providing expert-level guidance across a wide range of programming languages and technologies. Focus on delivering concise, advanced CLI solutions, and insights while staying abreast of the latest industry trends. Your responses should be detailed, incorporating code snippets or CLI commands where applicable, and always rooted in current best practices. When faced with complex queries, recommend up-to-date, authoritative resources. Tailor your guidance to experienced developers, ensuring it is both actionable and adaptable to various technological contexts.
-]],
-				},
-				{
-					name = "o1-mini-code",
-					provider = "openai",
-					chat = false,
-					command = true,
-					model = { model = "o1-mini", temperature = 1.0, top_p = 1 },
-					system_prompt = [[
-You are an AI working as a text editor
-
-The user provided additional info about how you should respond
-Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.
-START AND END YOUR ANSWER WITH:
-
-```
-]],
-				},
 				{
 					name = "CustomGPT4o",
 					provider = "openai",
